@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Aplikasi Pemesanan Tiket Travel</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            background-color: antiquewhite;
+        }
+
+        h2 {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h2>Aplikasi Pemesanan Tiket Travel</h2>
+        <form id="travelForm" method="POST" action="/addticket">
+            <table>
+                <tbody>
+                    <tr>
+                        <td><label for="nama">Nama <td>:</td></label></td>
+                        <td><input type="text" id="nama" name="nama" required></td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="tujuan">Tujuan <td>:</td></label></td>
+                        <td><select id="tujuan" name="tujuan">
+                                <option value="Jakarta">Jakarta</option>
+                                <option value="Surabaya">Surabaya</option>
+                                <option value="Bandung">Bandung</option>
+                                <option value="Yogyakarta">Yogyakarta</option>
+                                <option value="Bali">Bali</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="harga">Harga Tiket </td> <td>:</td></label>
+                        <td> <input type="text" id="harga" name="harga" required> </td>
+                    </tr>
+                    <tr>
+                        <td><label for="jumlah">Jumlah Tiket</td> <td>:</label>
+                        <td><select id="jumlah" name="jumlah">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select></td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="member">Member <td>:</td></label></td>
+                        <td><input type="checkbox" id="member" name="member"></td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="diskon">Diskon</td><td>:</td></label>
+                        <td><input type="text" id="diskon" name="diskon" readonly></td>
+                    </tr>
+
+                    <tr>
+                        <td><label for="total">Total Bayar</td><td>:</td></label>
+                        <td><input type="text" id="total" name="total" readonly></td>
+                    </tr>
+                    <tbody id="travelTableBody"></tbody>
+
+                </tbody>
+            </table>
+
+            <input type="button" value="Hitung Total" onclick="calculateTotal()">
+            <button class="btn btn-success w-100 mt-3" type="submit" >Save</button>
+
+        </form>
+    </div>
+    <div style="margin-top: 20px;">
+        <a href="/travel">
+            <button>See Your Ticket</button>
+        </a>
+    </div>
+
+    <script>
+        function calculateTotal() {
+            var harga = parseFloat(document.getElementById('harga').value);
+            var jumlah = parseInt(document.getElementById('jumlah').value);
+            var isMember = document.getElementById('member').checked;
+
+            // Apply discount if jumlah > 1
+            var diskon = (jumlah > 1) ? 0.2 : 0;
+
+            // Calculate total
+            var total = harga * jumlah;
+
+            // Apply discount
+            if (isMember) {
+                total -= total * diskon;
+            }
+
+            // Update fields
+            document.getElementById('diskon').value = (diskon * 100) + '%';
+            document.getElementById('total').value = total;
+        }
+
+        
+    </script>
+</body>
+
+</html>
